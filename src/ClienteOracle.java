@@ -147,7 +147,7 @@ public class ClienteOracle {
        System.out.println("SOLUCION");
        System.out.println("-----------------------------------------------");
        for(int i=0; i<solucion_completa.size(); i++){
-           System.out.print(convertHexToString(ClienteOracle.xor(getBloqueCompleto(solucion_completa.get(i)), iv_com[i])).toLowerCase());
+           System.out.print(new String(ClienteOracle.hexStringToBytes((ClienteOracle.xor(getBloqueCompleto(solucion_completa.get(i)), iv_com[i])))));
        }
        System.out.println("\n-----------------------------------------------");
    }
@@ -169,7 +169,7 @@ public class ClienteOracle {
                 String sol_hex= "00";
                 String iv_sol = cacularIVNuevo(sol, pad);
                 iv = iv.substring(0, iv.length()-2);
-                while(timingOracle(iv+sol_hex+iv_sol+bloque)<200){
+                while(timingOracle(iv+sol_hex+iv_sol+bloque)<450){
                     if(sol_hex.equals("ff")||sol_hex.equals("FF")){
                         throw new RuntimeException("Problema encontrado");
                     }
@@ -194,7 +194,7 @@ public class ClienteOracle {
         System.out.println("SOLUCION");
         System.out.println("-----------------------------------------------");
         for(int i=0; i<solucion_completa.size(); i++){
-            System.out.print(convertHexToString(ClienteOracle.xor(getBloqueCompleto(solucion_completa.get(i)), iv_com[i])));
+            System.out.print(new String(ClienteOracle.hexStringToBytes((ClienteOracle.xor(getBloqueCompleto(solucion_completa.get(i)), iv_com[i])))));
         }
         System.out.println("\n-----------------------------------------------");
     }
@@ -247,30 +247,9 @@ public class ClienteOracle {
         System.out.println("SOLUCION");
         System.out.println("-----------------------------------------------");
         for(int i=0; i<solucion_completa.size(); i++){
-            System.out.print(convertHexToString(ClienteOracle.xor(getBloqueCompleto(solucion_completa.get(i)), iv_com[i])));
+            System.out.print(new String(ClienteOracle.hexStringToBytes((ClienteOracle.xor(getBloqueCompleto(solucion_completa.get(i)), iv_com[i])))));
         }
         System.out.println("\n-----------------------------------------------");
-    }
-
-    public static String convertHexToString(String hex) {
-
-        StringBuilder result = new StringBuilder();
-
-        // split into two chars per loop, hex, 0A, 0B, 0C...
-        for (int i = 0; i < hex.length() - 1; i += 2) {
-
-            String tempInHex = hex.substring(i, (i + 2));
-
-            //convert hex to decimal
-            int decimal = Integer.parseInt(tempInHex, 16);
-
-            // convert the decimal to char
-            result.append((char) decimal);
-
-        }
-
-        return result.toString();
-
     }
 
     /**
@@ -288,7 +267,7 @@ public class ClienteOracle {
         String e = "c0ad3d84be178fbd3475f3b5271d0ee9cbc1d28c9197805a933cc67180703e1826b4ad6fc6376b976f05053679924e2cc6550c6c59686e0e70193fa038b587a5917a1a082251135b2e2a2b49a0120c85";
         String e1 = "50c0acfb539f120c905ffc2ba2a26c4f94be2250449e707249e306edb69b51223bc01e8734e1b2d970fc534c93a619d99de233383fe9a155f172882d415a15c792238d1a231a716b2eabfe7efd1e3539";
         String t = "32d5454a21ba5850cb19d6cb5f5b89c477d4892b1443271e601e5d9264f33ce89e7f46ad7ea842d3c2fd477aef53a20b5509aa655a55d2d778fcaf07c88f3bf1bb00ff438108dcd3414c76be47ded71b";
-        getError(e1);
+        getTimeExacto(t);
 
     }
 
